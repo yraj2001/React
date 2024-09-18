@@ -1,16 +1,18 @@
 import Alert from "./components/Alert";
+import Buttons from "./components/Buttons";
 import ListGroup from "./components/ListGroup";
+import React from "react";
+import { ReactDOM } from "react";
+import { useState } from "react";
 
 function App() {
-  const handleSelectItem = (item: string) => {
-    console.log(item);
-  };
-
+  let [alertVisibility, setAlertVisibility] = useState(false);
   return (
     <>
-      <Alert>
-        <span>Alert</span> Testing
-      </Alert>
+      {alertVisibility && (
+        <Alert onClose={() => setAlertVisibility(false)}>My alert</Alert>
+      )}
+      <Buttons onClick={() => setAlertVisibility(true)}>Button</Buttons>
     </>
   );
 }
