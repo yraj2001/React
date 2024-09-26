@@ -5,7 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
   name: z.string().min(3),
-  age: z.number({ invalid_type_error: "Age field is required." }).min(18),
+  age: z
+    .number({ invalid_type_error: "Age field is required." })
+    .min(18)
+    .max(150),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -14,7 +17,7 @@ const Form = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => console.log(data);
@@ -45,7 +48,7 @@ const Form = () => {
         />
       </div>
       {errors.age && <p className="text-danger">{errors.age.message}</p>}
-      <button className="btn btn-primary" type="submit">
+      <button disabled={!isValid} className="btn btn-primary" type="submit">
         Submit
       </button>
     </form>
